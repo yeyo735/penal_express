@@ -1,16 +1,20 @@
-import express, { json } from 'express';
-import { config } from 'dotenv';
-import connectDB from './config/db';
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js'; // Asegúrate de tener el archivo db.js en el mismo directorio
 
-config();
+dotenv.config();
+const app = express();
+const port = process.env.PORT || 5000;
+
+app.use(express.json());
+
+app.get('/', (req, res) => {
+    res.send('Hello, world!');
+});
+
 connectDB();
 
-const app = express();
-
-app.use(json());
-
-app.get('/', (req, res) => res.send('API running'));
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
